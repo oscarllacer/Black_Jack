@@ -24,13 +24,16 @@ public class Deck : MonoBehaviour
     public Button confirmButton;
     public int[] values = new int[52];
     int cardIndex = 0;
+
     int[] order = new int[52];
     private int bank = 1000;
     private int bet = 0;
+
     private void Awake()
     {
         InitCardValues();
     }
+
     private void Start()
     {
         ShuffleCards();
@@ -109,7 +112,7 @@ public class Deck : MonoBehaviour
         }
         else if (GetDealerScore() == 21)
         {
-            finalMessage.text = "El crupier tiene Blackjack!";
+            finalMessage.text = "El Dealer tiene Blackjack!";
         }
         else // Si no hay Blackjack, se habilita la opción de pedir carta
         {
@@ -194,30 +197,30 @@ public class Deck : MonoBehaviour
     {
         // Asegurarse de que no se repartan más cartas de las que hay en la baraja
        if (cardIndex >= faces.Length)
-    {
+       {
         Debug.Log("No hay más cartas en la baraja.");
         return;
-    }
+       }
 
-    int cardPos = order[cardIndex]; // Usar el índice barajado
-    player.GetComponent<CardHand>().Push(faces[cardPos], values[cardPos]);
-    cardIndex++;
+       int cardPos = order[cardIndex]; // Usar el índice barajado
+        player.GetComponent<CardHand>().Push(faces[cardPos], values[cardPos]);
+        cardIndex++;
 
-    pointsPlayer.text = player.GetComponent<CardHand>().points.ToString();
+         pointsPlayer.text = player.GetComponent<CardHand>().points.ToString();
 
-    // Si el jugador alcanza 21, mostrar "Blackjack!!"
-    if (GetPlayerScore() == 21)
-    {
-        finalMessage.text = "¡Blackjack!!";
-        Stand(); // Detener al jugador (no puede seguir pidiendo cartas)
-    }
-    else if (GetPlayerScore() > 21)
-    {
+       // Si el jugador alcanza 21, mostrar "Blackjack!!"
+        if (GetPlayerScore() == 21)
+        {
+          finalMessage.text = "¡Blackjack!!";
+           Stand(); // Detener al jugador (no puede seguir pidiendo cartas)
+        }
+        else if (GetPlayerScore() > 21)
+        {
             finalMessage.text = "¡¡¡Has perdido, te has pasado de 21!!!";
             Stand(); // Si el jugador se pasa de 21, también se detiene
         }
 
-    CalculateProbabilities();
+         CalculateProbabilities();
     }
 
 
